@@ -13,11 +13,11 @@
 }
 
 body{
-  background: linear-gradient(135deg,#ff4d88,#ff7aa2);
+  background:#ff4d88;
   overflow:hidden;
 }
 
-/* Sayfalar */
+/* Slide */
 .slide{
   position:absolute;
   width:100%;
@@ -35,77 +35,81 @@ body{
   display:flex;
 }
 
+/* Kart */
 .card{
   background:white;
   color:#333;
   padding:35px;
   border-radius:25px;
-  max-width:850px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.25);
+  max-width:900px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
+/* Buton */
 button{
   border:none;
-  padding:15px 35px;
+  padding:15px 30px;
   border-radius:30px;
   font-size:18px;
   cursor:pointer;
   background:#ff4d88;
   color:white;
   margin:10px;
-  transition:0.3s;
-  position:relative;
-  z-index:5;
 }
 
-button:hover{
-  transform:scale(1.05);
-}
-
+/* Resimler */
 .slide img{
-  max-width:85%;
-  max-height:70vh;
+  max-width:90%;
+  max-height:75vh;
   border-radius:20px;
   object-fit:contain;
   margin-bottom:20px;
-  z-index:2;
 }
 
-/* Uçan kalpler */
+/* Yan yana resimler */
+.row{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.row img{
+  width:40%;
+  max-width:400px;
+}
+
+/* Kalpler */
 .heart{
-  position:fixed;
-  bottom:-20px;
-  color:rgba(255,255,255,0.7);
-  animation:float linear infinite;
+  position:absolute;
   font-size:22px;
-  pointer-events:none;
-  z-index:1;
+  animation:float 6s linear infinite;
+  pointer-events:none; /* TIKLAMAYI ENGELLEMEZ */
 }
 
 @keyframes float{
-  from{ transform:translateY(0); }
-  to{ transform:translateY(-110vh); }
+  from{ transform:translateY(100vh); opacity:1; }
+  to{ transform:translateY(-10vh); opacity:0; }
 }
 
-/* Kalp patlaması */
+/* Patlama */
 .burst{
-  position:fixed;
-  font-size:24px;
-  animation:burst 0.9s ease forwards;
+  position:absolute;
+  font-size:30px;
+  animation:burst 0.6s ease-out forwards;
   pointer-events:none;
-  z-index:3;
 }
 
 @keyframes burst{
-  to{
-    transform:translate(var(--x),var(--y));
-    opacity:0;
-  }
+  from{ transform:scale(0.5); opacity:1; }
+  to{ transform:scale(2); opacity:0; }
 }
 </style>
 </head>
 
 <body>
+
+<div id="hearts"></div>
 
 <!-- 1 -->
 <div class="slide active">
@@ -113,7 +117,8 @@ button:hover{
     <h1>🔒 Kilit Ekranı</h1><br><br>
     <p>En sevdiğim şey ne?</p><br>
     <input id="pass" type="password" placeholder="Cevap..."
-      style="padding:10px;border-radius:10px;border:1px solid #ccc;"><br><br>
+      style="padding:12px;border-radius:10px;border:1px solid #ccc;">
+    <br><br>
     <button onclick="checkPass()">Aç ❤️</button>
   </div>
 </div>
@@ -131,11 +136,9 @@ button:hover{
 <div class="slide">
   <img src="sifayi-optugum.jpg">
   <div class="card">
-    <p>
-      Seninle geçirdiğimiz neredeyse bir yıl olacak ve ilk defa bir Sevgililer Günü’nde birini gerçekten düşünüyorum.
-      O kişi sensin. Benim için çok özelsin, bu yüzden böyle bir hediye hazırlamak istedim.
-      Seni çok seviyorum birtanem, iyi ki hayatıma girdin, hayatıma renk kattın. 🌸
-    </p>
+    Seninle geçirdiğimiz neredeyse bir yıl olacak ve ilk defa bir Sevgililer Günü’nde birini gerçekten düşünüyorum.
+    O kişi sensin. Benim için çok özelsin, bu yüzden böyle bir hediye hazırlamak istedim.
+    Seni çok seviyorum birtanem, iyi ki hayatıma girdin, hayatıma renk kattın. 🌸
   </div>
 </div>
 
@@ -143,11 +146,9 @@ button:hover{
 <div class="slide">
   <img src="karli-fotograf.jpg">
   <div class="card">
-    <p>
-      Yüzünün, daha doğrusu gözlerinin güldüğü fotoğrafları seçtim.
-      Daha tatlı gözüküyorsun bebeğim. Her fotoğrafımız güzel ama bunlar ayrı hoşuma gitti.
-      Daha niceleri gelecek, ayrılmazsa prensesim 🙂
-    </p>
+    Yüzünün, daha doğrusu gözlerinin güldüğü fotoğrafları seçtim.
+    Daha tatlı gözüküyorsun bebeğim. Her fotoğrafımız güzel ama bunlar ayrı hoşuma gitti.
+    Daha niceleri gelecek, ayrılmazsa prensesim 🙂
   </div>
 </div>
 
@@ -155,63 +156,71 @@ button:hover{
 <div class="slide">
   <img src="diger-fotograf.jpg">
   <div class="card">
-    <p>
-      Aldığım hediyeleri bununla beraber umarım beğenmişsindir.
-      Seni mutlu etmek istiyorum çünkü mutlu görünce ben de çok güzel hissediyorum.
-      Sen hep mutlu ol, yüzün gülsün güzelim… ben oldukça zaten gülecek. 💞
-    </p><br>
+    Aldığım hediyeleri bununla beraber umarım beğenmişsindir.
+    Seni mutlu etmek istiyorum çünkü mutlu görünce ben de çok güzel hissediyorum.
+    Sen hep mutlu ol, yüzün gülsün güzelim… ben oldukça zaten gülecek. 💞
+    <br><br>
     <h3>21/03/2025</h3>
     <h2>Sevgilin sana çok aşık 💗</h2>
   </div>
 </div>
 
-<!-- 6 -->
+<!-- 6 GÖZ -->
 <div class="slide">
-  <img src="goz.jpg">
+  <img src="goz-fotografi.jpg">
   <div class="card">
-    <p>
-      Gözlerin o kadar güzelki baktıkça içine düşesim geliyor belki sen güzel olmadığını düşünüyosun bilmiyorum ama ben gözlerine bayılıyorum
-      onları 5 dk bile görmek için her yere gelirim kahverengi gözlerine kurban olduğum onları öpemiyorum ayrılırız diye korkuyorum ama
-      çok öpmek istiyorum gözlerini (ayrıldığımızda öpüp kaçıcam)
-    </p>
+    Gözlerin o kadar güzelki baktıkça içine düşesim geliyor belki sen güzel olmadığını düşünüyosun bilmiyorum ama ben gözlerine bayılıyorum
+    onları 5 dk bile görmek için her yere gelirim kahverengi gözlerine kurban olduğum onları öpemiyorum ayrılırız diye korkuyorum ama
+    çok öpmek istiyorum gözlerini (ayrıldığımızda öpüp kaçıcam)
   </div>
 </div>
 
 <!-- 7 -->
 <div class="slide">
-  <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center">
-    <img src="oturuyor.jpg" style="max-width:40%">
-    <img src="yuruyor.jpg" style="max-width:40%">
+  <div class="row">
+    <img src="oturan-fotograf.jpg">
+    <img src="yururken-fotograf.jpg">
   </div>
   <div class="card">
-    <p>
-      Seninle vakit geçirmek çok güzel kavgada etsek gülsekte mutluda olsak mutsuzda olsak yanında huzur buluyorum güzelim
-      seninle heryeri gezmek görmek istiyorum seninle yürümeyi çok seviyorum sen tabi küçük ayaklarınla yoruluyosun ama sen yorulana kadar
-      yürümek çok güzel yorulduktan sonra veya acıkmışken çok mızmız oluyosun ama olsun sevgilin seni çok seviyor biraz büyü daha küçüksün
-      ileride kucağımda taşırım yorulduğunda küçük bebeğim benim
-    </p>
+    Seninle vakit geçirmek çok güzel kavgada etsek gülsekte mutluda olsak mutsuzda olsak yanında huzur buluyorum güzelim
+    seninle heryeri gezmek görmek istiyorum seninle yürümeyi çok seviyorum sen tabi küçük ayaklarınla yoruluyosun ama sen
+    yorulana kadar yürümek çok güzel yorulduktan sonra veya acıkmışken çok mızmız oluyosun ama olsun sevgilin seni çok seviyor
+    biraz büyü daha küçüksün ileride kucağımda taşırım yorulduğunda küçük bebeğim benim
   </div>
 </div>
 
-<!-- 8 -->
+<!-- 8 SON -->
 <div class="slide">
-  <img src="gul.jpg" style="max-width:60%">
+  <img src="gul-fotografi.jpg">
 </div>
 
 <script>
 let current = 0;
 const slides = document.querySelectorAll(".slide");
+const hearts = document.getElementById("hearts");
+
+function burstHearts(){
+  for(let i=0;i<12;i++){
+    const b = document.createElement("div");
+    b.className = "burst";
+    b.innerHTML = "💗";
+    b.style.left = (window.innerWidth/2 + (Math.random()*200-100))+"px";
+    b.style.top = (window.innerHeight/2 + (Math.random()*200-100))+"px";
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),600);
+  }
+}
 
 function showSlide(index){
   slides[current].classList.remove("active");
-  burstHearts();
   current = index;
   slides[current].classList.add("active");
+  burstHearts();
 }
 
 function nextSlide(){
-  if(current < slides.length - 1){
-    showSlide(current + 1);
+  if(current < slides.length-1){
+    showSlide(current+1);
   }
 }
 
@@ -224,7 +233,7 @@ function checkPass(){
   }
 }
 
-/* Hayır butonu kaçma */
+/* Hayır kaçma */
 const noBtn = document.getElementById("noBtn");
 noBtn.addEventListener("mouseover", () => {
   noBtn.style.position = "absolute";
@@ -232,37 +241,21 @@ noBtn.addEventListener("mouseover", () => {
   noBtn.style.top = Math.random()*80 + "%";
 });
 
-/* Sağ / sol tıklama */
+/* Sağ sol */
 document.body.addEventListener("click", (e)=>{
   if(e.clientX > window.innerWidth/2) nextSlide();
-  else if(current > 0) showSlide(current-1);
+  else if(current>0) showSlide(current-1);
 });
 
-/* Uçan kalpler */
+/* Sürekli kalp */
 setInterval(()=>{
   const h = document.createElement("div");
   h.className="heart";
-  h.innerHTML="💖";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(3+Math.random()*4)+"s";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),7000);
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"%";
+  hearts.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
 },300);
-
-/* Patlama */
-function burstHearts(){
-  for(let i=0;i<20;i++){
-    const b=document.createElement("div");
-    b.className="burst";
-    b.innerHTML="💖";
-    b.style.left="50vw";
-    b.style.top="50vh";
-    b.style.setProperty("--x",(Math.random()*400-200)+"px");
-    b.style.setProperty("--y",(Math.random()*400-200)+"px");
-    document.body.appendChild(b);
-    setTimeout(()=>b.remove(),900);
-  }
-}
 </script>
 
 </body>
