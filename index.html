@@ -54,6 +54,8 @@ button{
   color:white;
   margin:10px;
   transition:0.3s;
+  position:relative;
+  z-index:5;
 }
 
 button:hover{
@@ -66,15 +68,18 @@ button:hover{
   border-radius:20px;
   object-fit:contain;
   margin-bottom:20px;
+  z-index:2;
 }
 
-/* Kalpler */
+/* Uçan kalpler */
 .heart{
   position:fixed;
   bottom:-20px;
   color:rgba(255,255,255,0.7);
   animation:float linear infinite;
   font-size:22px;
+  pointer-events:none;
+  z-index:1;
 }
 
 @keyframes float{
@@ -86,7 +91,9 @@ button:hover{
 .burst{
   position:fixed;
   font-size:24px;
-  animation:burst 1s ease forwards;
+  animation:burst 0.9s ease forwards;
+  pointer-events:none;
+  z-index:3;
 }
 
 @keyframes burst{
@@ -100,7 +107,7 @@ button:hover{
 
 <body>
 
-<!-- 1. SAYFA -->
+<!-- 1 -->
 <div class="slide active">
   <div class="card">
     <h1>🔒 Kilit Ekranı</h1><br><br>
@@ -111,7 +118,7 @@ button:hover{
   </div>
 </div>
 
-<!-- 2. SAYFA -->
+<!-- 2 -->
 <div class="slide">
   <div class="card">
     <h1>Beni seviyor musun? ❤️</h1><br><br>
@@ -186,7 +193,7 @@ button:hover{
   </div>
 </div>
 
-<!-- 8 SON -->
+<!-- 8 -->
 <div class="slide">
   <img src="gul.jpg" style="max-width:60%">
 </div>
@@ -244,7 +251,7 @@ setInterval(()=>{
 
 /* Patlama */
 function burstHearts(){
-  for(let i=0;i<25;i++){
+  for(let i=0;i<20;i++){
     const b=document.createElement("div");
     b.className="burst";
     b.innerHTML="💖";
@@ -253,7 +260,7 @@ function burstHearts(){
     b.style.setProperty("--x",(Math.random()*400-200)+"px");
     b.style.setProperty("--y",(Math.random()*400-200)+"px");
     document.body.appendChild(b);
-    setTimeout(()=>b.remove(),1000);
+    setTimeout(()=>b.remove(),900);
   }
 }
 </script>
